@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I'M SAFE Dashboard</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      font-size: large;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #4b2a5a;
+    }
+
+    .dashboard {
+      max-width: 1800px;
+      margin: auto;
+      text-align: left;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    .app-title {
+      margin: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .profile-details {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 60px;
+      height: 60px;
+      background-color: #ddd;
+      border-radius: 50%;
+      margin-right: 10px;
+      overflow: hidden; /* Ensure the image stays circular */
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .profile-info p {
+      margin: 0;
+      color: #666;
+    }
+
+    .edit-btn {
+      background: none;
+      border: none;
+      color: #4b2a5a;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* SOS Section */
+    .sos-section {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .sos-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sos-status {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 50px;
+      max-width: 100%;
+      padding: 20px;
+    }
+
+    .menu-item {
+      background-color: #f8f8f8;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-transform: capitalize;
+      border: none; /* Ensures buttons have no border */
+      text-align: center;
+    }
+
+    .menu-item:hover {
+      background-color: #eaeaea;
+    }
+
+    .menu-item:focus {
+      outline: 2px solid #4b2a5a;
+    }
+
+    /* Hidden file input */
+    #upload-profile-pic {
+      display: none;
+    }
+  </style>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header Section -->
+    <header class="header">
+      <h1 class="app-title">Sakhi</h1>
+      <button class="close-btn">✖</button>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+      <div class="profile-details">
+        <div class="profile-pic">
+          <img src="profile.png.png" alt="Profile Picture" id="profile-pic">
+        </div>
+        <div class="profile-info">
+          <h2>User</h2>
+          <p>Contact Info</p>
+        </div>
+      </div>
+      <button class="edit-btn" id="change-pic-btn"><i class="fas fa-edit"></i></button>
+    </section>
+
+    <!-- Hidden file input for uploading a new image -->
+    <input type="file" id="upload-profile-pic" accept="image/*">
+
+    <!-- SOS Section -->
+    <section class="sos-section">
+      <div class="sos-info">
+        <label for="sos-toggle"><i class="fas fa-bell"></i> SOS Device</label>
+        <input type="checkbox" id="sos-toggle">
+      </div>
+      <p class="sos-status">Disconnected</p>
+    </section>
+
+    <!-- Grid Menu -->
+    <section class="menu-grid">
+      <button class="menu-item" onclick="window.location.href='history.html';">
+        <i class="fas fa-history"></i>
+        <p>History</p>
+      </button>
+      <button class="menu-item" onclick="window.location.href='emergency_contact.html';">
+        <i class="fas fa-user-friends"></i>
+        <p>Friends</p>
+      </button>
+      <button class="menu-item" onclick="window.location.href='feedback.html';">
+        <i class="fas fa-comment-alt"></i>
+        <p>Feedback</p>
+      </button>
+      <button class="menu-item" onclick="window.location.href='legal.html';">
+        <i class="fas fa-file-alt"></i>
+        <p>Legal</p>
+      </button>
+      <button class="menu-item" id="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <p>Log Out</p>
+      </button>
+    </section>
+  </div>
+
+  <script>
+    // SOS toggle functionality
+    document.getElementById("sos-toggle").addEventListener("change", function () {
+      const sosStatus = document.querySelector(".sos-status");
+      sosStatus.textContent = this.checked ? "Connected" : "Disconnected";
+    });
+
+    // Close button functionality
+    document.querySelector(".close-btn").addEventListener("click", function () {
+      window.location.href = "home.html";
+    });
+
+    // Logout button functionality
+    document.getElementById("logout-btn").addEventListener("click", function () {
+      window.location.href = "index.html"; // Redirect to index.html
+    });
+
+    // Load user data and profile image
+    document.addEventListener('DOMContentLoaded', function () {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user) {
+        document.querySelector('.profile-info h2').textContent = user.fullName;
+        document.querySelector('.profile-info p').textContent = user.phone;
+        const profilePic = document.getElementById('profile-pic');
+        if (user.profileImage) {
+          profilePic.src = user.profileImage; // Use saved profile image
+        }
+      } else {
+        alert("No user data found. Please log in.");
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Handle profile picture upload
+    document.getElementById('change-pic-btn').addEventListener('click', function () {
+      document.getElementById('upload-profile-pic').click();
+    });
+
+    document.getElementById('upload-profile-pic').addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('profile-pic').src = e.target.result;
+          const user = JSON.parse(localStorage.getItem('user')) || {};
+          user.profileImage = e.target.result; // Save the image as a base64 string
+          localStorage.setItem('user', JSON.stringify(user));
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

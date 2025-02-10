@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Contacts</title>
+    <link href="logo.png" type="x-icon" rel="shortcut icon">
+    <style>
+        body {             
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+            background-color: #f4f4f9;
+        }
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:  #004080;
+            padding: 20px 0;
+        }
+        h1 {
+            color: white;
+            font-size: 24px;
+        }
+        .contact-list {
+            margin: 20px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .contact-item span {
+            font-size: 18px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #5b068bde;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #114903;
+        }
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #5b068bde;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .add-btn:hover {
+            background-color: #982dd6de;
+        }
+        .contact-list p {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Emergency Contacts</h1>
+    </header>
+    <div class="contact-list" id="contactList">
+        <!-- Contacts will appear here -->
+    </div>
+    <button class="add-btn" onclick="goToAddPage()">Add + </button>
+
+    <script>
+        // Navigate to Add Contact Page
+        function goToAddPage() {
+            window.location.href = 'add_contact.html';
+        }
+
+        // Display contacts on the page
+        function displayContacts() {
+            const contactList = document.getElementById('contactList');
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || []; // Ensure contacts is always an array
+            
+            contactList.innerHTML = ''; // Clear the list first
+            
+            if (contacts.length === 0) {
+                contactList.innerHTML = '<p>No contacts added yet.</p>'; // Display message if no contacts
+                return;
+            }
+
+            contacts.forEach((contact, index) => {
+                const div = document.createElement('div');
+                div.className = 'contact-item';
+                div.innerHTML = `  
+                    <span>${contact.name} (${contact.mobile})</span>
+                    <div class="buttons">
+                        <button onclick="callContact('${contact.mobile}')">Call</button>
+                        <button onclick="deleteContact(${index})">Cancel</button>
+                    </div>
+                `;
+                contactList.appendChild(div);
+            });
+        }
+
+        // Delete contact
+        function deleteContact(index) {
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || []; // Ensure contacts is always an array
+            contacts.splice(index, 1); // Remove contact at the given index
+            localStorage.setItem('contacts', JSON.stringify(contacts)); // Save updated contacts back to storage
+            displayContacts(); // Refresh the displayed contacts
+        }
+
+        // Simulate a call (if needed)
+        function callContact(mobile) {
+            alert(`Calling ${mobile}...`); // Just a placeholder for the call function
+        }
+
+        // Load contacts on page load
+        window.onload = displayContacts;
+    </script>
+</body>
+</html>

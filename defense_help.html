@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defense Help</title>
+    <link href="logo.png" type="x-icon" rel="shortcut icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Self-Defense Tips Section */
+        .tips {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .tips:hover {
+            transform: translateY(-5px);
+        }
+
+        .tips h2 {
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        .tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips ul li {
+            position: relative;
+            margin-bottom: 15px;
+            padding-left: 30px;
+        }
+
+        .tips ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: green;
+            font-size: 1.5em;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin-bottom: 30px;
+        }
+
+        .video-section h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .video {
+            flex: 1 1 calc(100% - 20px); 
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .video:hover {
+            transform: scale(1.05);
+        }
+
+        .video iframe {
+            width: 100%;
+            height: 450px;
+        }
+
+        /* Like/Dislike Buttons */
+        .like-dislike {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding: 10px 0;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .like-dislike button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .like-dislike button:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .like-dislike .count {
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .like-dislike .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Button Section */
+        .home-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .home-btn button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-btn button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Defense Help - Empower Yourself
+    </header>
+
+    <main>
+        <!-- Self-Defense Tips Section -->
+        <div class="tips">
+            <h2>Self-Defense Tips</h2>
+            <ul>
+                <li>Be aware of your surroundings and avoid distractions like headphones or phones.</li>
+                <li>Carry simple defense tools like pepper spray or a safety alarm.</li>
+                <li>Trust your instincts and stay away from situations that feel unsafe.</li>
+                <li>Learn how to escape grips by targeting vulnerable areas like the eyes or groin.</li>
+                <li>If attacked, focus on creating distance and finding help as quickly as possible.</li>
+            </ul>
+        </div>
+
+        <!-- Video Section -->
+        <div class="video-section">
+            <h2>Learn Self-Defense</h2>
+            <div class="video-container">
+                <!-- Video 1 -->
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/T7aNSRoDCmg?rel=0" title="Self Defense for Women"></iframe>
+                </div>
+                <!-- Video 2 -->
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/7JidWSyLX-c?rel=0" title="Tips for Kids' Safety"></iframe>
+                </div>
+                <!-- Video 3 -->
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/playlist?list=PLL4ltkk4pgMff82URX9Y3sbKjf-Eaq01g&si=ZDgluJNec1MP885N" title="Safety Techniques Playlist"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="home-btn">
+            <button onclick="window.location.href=''">See More>>></button>
+        </div>
+        <!-- Home Button Section -->
+        <div class="home-btn">
+            <button onclick="window.location.href='home.html'">Go to Home Page</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Defense Help | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakhi</title>
+<link href="logo.png" type="x-icon" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f0f0, #e6e6ff);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: #004080;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 120px; /* Adjust size */
+            height: auto;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            background: white;
+            color: #004080;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(145deg, #004080, #0077cc);
+            color: white;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        #downloadBtn {
+            background: #ff6600;
+            color: white;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        #downloadBtn:hover {
+            background: #e65c00;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(255, 102, 0, 0.4);
+        }
+
+        /* Features Section */
+        #features {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        #features h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .feature img {
+            width: 80px;
+            margin-bottom: 1rem;
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* Demo Section */
+        #demo {
+            text-align: center;
+            padding: 4rem;
+            background: linear-gradient(to top, #004080, #0077cc);
+            color: white;
+        }
+
+        .map-container {
+            width: 80%;
+            height: 500px;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 4rem 2rem;
+            background: #f9f9f9;
+        }
+
+        #contact h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            border-color: #0077cc;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0, 119, 204, 0.3);
+        }
+
+        form button {
+            background: #004080;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        form button:hover {
+            background: #003366;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #004080;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="Sakhi Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Welcome to Sakhi</h1>
+        <p>Your personal safety companion for emergencies and real-time assistance.</p>
+        <a href="login.html"><button id="downloadBtn">Click Here</button></a>
+    </section>
+
+    <section id="features">
+        <h2>App Features</h2>
+        <div class="features-list">
+            <div class="feature">
+                <img src="sos1.png" alt="SOS">
+                <h3>One-Tap SOS</h3>
+                <p>Send an instant distress signal to emergency contacts with a tap.</p>
+            </div>
+            <div class="feature">
+                <img src="map.png" alt="Location">
+                <h3>Real-Time Location</h3>
+                <p>Share your live location with trusted contacts instantly.</p>
+            </div>
+            <div class="feature">
+                <img src="emerencycont.png" alt="Emergency">
+                <h3>Emergency Contacts</h3>
+                <p>Access and connect with your emergency contacts quickly.</p>
+            </div>
+            <div class="feature">
+                <img src="help.png" alt="Helpline">
+                <h3>Helpline</h3>
+                <p>Reach emergency services with helpline numbers in seconds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo">
+        <h2>Live Demo</h2>
+        <div class="map-container" id="map"></div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Sakhi | All rights reserved</p>
+    </footer>
+
+    <script>
+        let map;
+
+       
+    </script>
+</body>
+</html>

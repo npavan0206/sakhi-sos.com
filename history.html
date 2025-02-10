@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 1900px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    header {
+      text-align: center;
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      font-size: 20px;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background-color: #f4f4f9;
+    }
+
+    .chat-item {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0;
+      background-color: #e6f7ff;
+      padding: 10px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .chat-item .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: red;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .chat-item .details {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .chat-item .details strong {
+      color: #333;
+    }
+
+    .chat-item .timestamp {
+      text-align: right;
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+    }
+
+    footer {
+      padding: 10px;
+      background-color: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+    }
+
+    #clearHistory {
+      background-color: rgb(105, 154, 245);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #clearHistory:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>History</header>
+    <div class="chat-box" id="historyList">
+      <!-- Chat-like history items will be dynamically rendered here -->
+    </div>
+    <footer>
+      <button id="clearHistory">Clear History</button>
+    </footer>
+  </div>
+
+  <script>
+    const historyList = document.getElementById("historyList");
+    const clearHistory = document.getElementById("clearHistory");
+
+    // Fetch contacts from localStorage
+    function getContacts() {
+      return JSON.parse(localStorage.getItem("contacts")) || [];
+    }
+
+    // Fetch history data from localStorage
+    function getHistory() {
+      return JSON.parse(localStorage.getItem("history")) || [];
+    }
+
+    // Store updated history data to localStorage
+    function storeHistory(history) {
+      localStorage.setItem("history", JSON.stringify(history));
+    }
+
+    // Render history in a chat format
+    function renderHistory() {
+      const history = getHistory();
+      historyList.innerHTML = "";
+
+      // If no history, display a placeholder message
+      if (history.length === 0) {
+        historyList.innerHTML = "<p style='text-align: center; color: #777;'>No history found.</p>";
+        return;
+      }
+
+      // Render each history item as a chat bubble
+      history.forEach((item, index) => {
+        const chatItem = document.createElement("div");
+        chatItem.classList.add("chat-item");
+
+        chatItem.innerHTML = `
+          <button class="delete-btn" onclick="deleteHistory(${index})">Delete</button>
+          <div class="details">
+            <p><strong>Name:</strong> ${item.name}</p>
+            <p><strong>Phone:</strong> ${item.phone}</p>
+            <p><strong>Location:</strong> ${item.location}</p>
+            <p><strong>Note:</strong> ${item.note}</p>
+          </div>
+          <div class="timestamp">${item.date} | ${item.time}</div>
+        `;
+
+        historyList.appendChild(chatItem);
+      });
+
+      // Scroll to the bottom to show the latest entry
+      historyList.scrollTop = historyList.scrollHeight;
+    }
+
+    // Add new entry to history (called when SOS is triggered)
+    function addToHistory(location) {
+      const contacts = getContacts();
+      const now = new Date();
+      const date = now.toLocaleDateString();
+      const time = now.toLocaleTimeString();
+
+      // Add each contact with current timestamp and location
+      const newEntries = contacts.map(contact => ({
+        name: contact.name,
+        phone: contact.mobile,
+        location: location || "Unknown Location",
+        date,
+        time,
+        note: "Emergency",
+      }));
+
+      // Append to existing history
+      const history = getHistory();
+      const updatedHistory = [...history, ...newEntries];
+      storeHistory(updatedHistory);
+      renderHistory();
+    }
+
+    // Delete a specific history entry
+    function deleteHistory(index) {
+      const history = getHistory();
+      history.splice(index, 1);
+      storeHistory(history);
+      renderHistory();
+    }
+
+    // Clear all history
+    clearHistory.addEventListener("click", () => {
+      localStorage.removeItem("history");
+      renderHistory();
+    });
+
+    // Simulate adding a new SOS event (for testing)
+    // Uncomment below to simulate adding a test entry
+    // addToHistory("12.9716° N, 77.5946° E");
+
+    // Initial render
+    renderHistory();
+  </script>
+</body>
+</html>

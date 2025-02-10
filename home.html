@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Location Tracker</title>
+    <link href="logo.png" type="x-icon" rel="shortcut icon">
+    <!-- Link to Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Link to Font Awesome CSS for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <style>
+        /* Reset margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style for the body and HTML */
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        /* Style for the header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #004080;
+            color: white;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        header .menu {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Full-height map styling */
+        #map {
+            height: calc(100vh - 120px); /* Full height minus header and footer */
+            width: 100%;
+        }
+        
+        /* Footer styling */
+        footer {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: #004080;
+            color: white;
+            height: 60px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent; /* Transparent to remove box effect */
+            color: white;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        footer button:hover {
+            color: #ccc;
+        }
+
+        footer button i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            transform: rotate(0deg); /* Ensure no inversion or rotation */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Sakhi Logo"> <!-- Replace with your logo file -->
+            Sakhi
+        </div>
+        <div class="menu" onclick="window.location.href='menu.html'">☰</div> <!-- Redirect to menu page -->
+    </header>
+
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- Footer Section -->
+    <footer>
+        <button onclick="window.location.href='home.html'">
+            <i class="fas fa-map-marker-alt"></i>
+            Real-Time Location
+        </button>
+        <button onclick="window.location.href='defense_help.html'">
+            <i class="fas fa-user-shield"></i>
+            Defense Help
+        </button>
+        <button onclick="window.location.href='sos.html'">
+            <i class="fas fa-bullhorn" style="color:red"></i>
+            SOS
+        </button>
+        <button onclick="window.location.href='emergency_contact.html'">
+            <i class="fas fa-phone"></i> <!-- Corrected icon class -->
+            Emergency Contacts
+        </button>
+        <button onclick="window.location.href='helpline.html'">
+            <i class="fas fa-headset"></i>
+            Helpline
+        </button>
+    </footer>
+
+    <!-- Link to Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialize the map and set the view to a default location
+        const map = L.map('map').setView([51.505, -0.09], 13);
+
+        // Set OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Create a marker for the user's location
+        const marker = L.marker([51.505, -0.09]).addTo(map);
+
+        // Use Geolocation API to get the user's location
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+
+                    // Update the map view and marker position
+                    map.setView([latitude, longitude], 15);
+                    marker.setLatLng([latitude, longitude]).bindPopup('You are here!').openPopup();
+                },
+                (error) => {
+                    console.error("Error fetching location:", error.message);
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Contact</title>
+  <link href="logo.png" type="x-icon" rel="shortcut icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #bfbfd6;
+        }
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:  #004080;
+            padding: 20px 0;
+        }
+        h1 {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            margin: 0;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            width: 100%; 
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(61, 61, 61, 0.1);
+        }
+        label {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        input {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #5b068bde;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #9733d1de;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="text-align: center; width: 100%; max-width: 600px;">
+            <h1>Add Contact</h1>
+        </div>
+    </header>
+    
+    <div class="form-container">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter name" required>
+        
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" placeholder="Enter mobile number" required>
+        
+        <button onclick="addContact()">Add</button>
+    </div>
+
+    <script>
+        // Function to add a contact
+        function addContact() {
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+
+            if (!name || !mobile) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            contacts.push({ name, mobile });
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+            window.location.href = 'emergency_contact.html';  // Redirect to the contact list page
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link href="logo.png" type="x-icon" rel="shortcut icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f8fc;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      background:  #93c5f7;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 {
+      color: #333;
+    }
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 90%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <input type="text" placeholder="Full Name" id="fullName" required>
+      <input type="tel" placeholder="Phone Number" id="phone" required pattern="[0-9]{10}">
+      <input type="number" placeholder="Age" id="age" min="1" max="120" required>
+      <input type="email" placeholder="Email" id="email" required>
+      <input type="password" placeholder="Create Password" id="password" required>
+      <input type="password" placeholder="Confirm Password" id="confirmPassword" required>
+      <span id="errorMessage" class="error"></span>
+      <button type="submit">Submit</button>
+    </form>
+    <a href="login.html">Already have an account? Login here</a>
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName').value;
+      const phone = document.getElementById('phone').value;
+      const age = document.getElementById('age').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Validate passwords
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'Passwords do not match!';
+        return;
+      }
+
+      // Validate phone number length
+      if (phone.length !== 10) {
+        errorMessage.textContent = 'Phone number must be 10 digits!';
+        return;
+      }
+
+      // Save user details to localStorage
+      localStorage.setItem('user', JSON.stringify({ email, password,fullName,phone }));
+
+      errorMessage.textContent = ''; // Clear any previous error
+      alert('Sign Up Successful!');
+      window.location.href = 'login.html'; // Redirect to login page
+    });
+  </script>
+</body>
+</html>

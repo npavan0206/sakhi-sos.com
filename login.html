@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link href="logo.png" type="x-icon" rel="shortcut icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f5fa;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      background: #93c5f7;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 {
+      color: #333;
+    }
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 90%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #004080;
+      text-decoration: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" placeholder="Email" id="email" required>
+      <input type="password" placeholder="Password" id="password" required>
+      <a href="signup.html">Don't have an account? Sign up here</a>
+      <button type="submit">Login</button> <br>
+      <span id="errorMessage" class="error"></span>
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Retrieve user data from localStorage
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+
+      // Check if user data exists in localStorage and validate credentials
+      if (storedUser && storedUser.email === email && storedUser.password === password) {
+        alert('Login Successful!');
+        window.location.href = 'home.html'; // Redirect to home page
+      } else {
+        errorMessage.textContent = 'Login Unsuccessful!';
+      }
+    });
+  </script>
+</body>
+</html>

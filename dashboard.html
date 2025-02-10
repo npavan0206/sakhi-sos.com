@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I'M SAFE Dashboard</title>
+  <link href="logo.png" type="x-icon" rel="shortcut icon">
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #4b2a5a;
+    }
+
+    .dashboard {
+      max-width: 400px;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #4b2a5a;
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    .app-title {
+      margin: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .profile-details {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 60px;
+      height: 60px;
+      background-color: #ddd;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .profile-info p {
+      margin: 0;
+      color: #666;
+    }
+
+    .edit-btn {
+      background: none;
+      border: none;
+      color: #4b2a5a;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* SOS Section */
+    .sos-section {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .sos-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sos-status {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .menu-item {
+      background-color: #f8f8f8;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-transform: capitalize;
+      border: none; /* Ensures buttons have no border */
+      text-align: center;
+    }
+
+    .menu-item:hover {
+      background-color: #eaeaea;
+    }
+
+    .menu-item:focus {
+      outline: 2px solid #4b2a5a;
+    }
+  </style>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header Section -->
+    <header class="header">
+      <h1 class="app-title">I'M SAFE</h1>
+      <button class="close-btn">✖</button>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+      <div class="profile-details">
+        <div class="profile-pic"></div>
+        <div class="profile-info">
+          <h2>User</h2>
+          <p>Contact Info</p>
+        </div>
+      </div>
+      <button class="edit-btn"><i class="fas fa-edit"></i></button>
+    </section>
+
+    <!-- SOS Section -->
+    <section class="sos-section">
+      <div class="sos-info">
+        <label for="sos-toggle"><i class="fas fa-bell"></i> SOS Device</label>
+        <input type="checkbox" id="sos-toggle">
+      </div>
+      <p class="sos-status">Disconnected</p>
+    </section>
+
+    <!-- Grid Menu -->
+    <section class="menu-grid">
+      <button class="menu-item" data-action="history">
+        <i class="fas fa-history"></i>
+        <p>History</p>
+      </button>
+      <button class="menu-item" data-action="friends">
+        <i class="fas fa-user-friends"></i>
+        <p>Friends</p>
+      </button>
+      <button class="menu-item" data-action="block-list">
+        <i class="fas fa-ban"></i>
+        <p>Block List</p>
+      </button>
+      <button class="menu-item" data-action="feedback">
+        <i class="fas fa-comment-alt"></i>
+        <p>Feedback</p>
+      </button>
+      <button class="menu-item" data-action="legal">
+        <i class="fas fa-file-alt"></i>
+        <p>Legal</p>
+      </button>
+      <button class="menu-item" data-action="help">
+        <i class="fas fa-life-ring"></i>
+        <p>Help</p>
+      </button>
+      <button class="menu-item" data-action="language">
+        <i class="fas fa-language"></i>
+        <p>Language</p>
+      </button>
+      <button class="menu-item" data-action="settings">
+        <i class="fas fa-cogs"></i>
+        <p>Settings</p>
+      </button>
+      <button class="menu-item" id="logout-btn" data-action="logout">
+        <i class="fas fa-sign-out-alt"></i>
+        <p>Log Out</p>
+      </button>
+    </section>
+  </div>
+  <script>
+    // SOS toggle functionality
+    document.getElementById("sos-toggle").addEventListener("change", function () {
+      const sosStatus = document.querySelector(".sos-status");
+      sosStatus.textContent = this.checked ? "Connected" : "Disconnected";
+    });
+
+    // Close button functionality
+    document.querySelector(".close-btn").addEventListener("click", function () {
+      window.location.href = "home.html"; // Redirect to home page
+    });
+
+    // Logout button functionality
+    document.getElementById("logout-btn").addEventListener("click", function () {
+      window.location.href = "index.html"; // Redirect to index.html
+    });
+
+    // General button click functionality
+    document.querySelectorAll(".menu-item").forEach((button) => {
+      button.addEventListener("click", function () {
+        const action = this.getAttribute("data-action");
+
+        if (action === "history") {
+          // Redirect to history page
+          window.location.href = "history.html";
+        } else if (action === "friends") {
+          // Redirect to friends page
+          window.location.href = "friends.html";
+        } else if (action === "block-list") {
+          // Redirect to block list page
+          window.location.href = "block-list.html";
+        } else if (action === "feedback") {
+          // Redirect to feedback page
+          window.location.href = "feedback.html";
+        } else if (action === "legal") {
+          // Redirect to legal page
+          window.location.href = "legal.html";
+        } else if (action === "help") {
+          // Redirect to help page
+          window.location.href = "help.html";
+        } else if (action === "language") {
+          // Redirect to language page
+          window.location.href = "language.html";
+        } else if (action === "settings") {
+          // Redirect to settings page
+          window.location.href = "settings.html";
+        } else if (action === "logout") {
+          // Log out and redirect to login page
+          window.location.href = "index.html";
+        }
+      });
+    });
+
+    // Load user profile from local storage
+    document.addEventListener('DOMContentLoaded', function () {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user) {
+        document.querySelector('.profile-info h2').textContent = user.fullName;
+        document.querySelector('.profile-info p').textContent = user.phone;
+      } else {
+        alert("No user data found. Please log in.");
+        window.location.href = 'login.html'; // Redirect to login if no user data found
+      }
+    });
+  </script>
+</body>
+</html>
